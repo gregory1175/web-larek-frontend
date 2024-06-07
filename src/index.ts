@@ -1,19 +1,19 @@
 import './scss/styles.scss';
 
 import { EventEmitter } from './components/base/events';
-import { LarekAPI } from './components/LarekAPI';
-import { API_URL, CDN_URL } from './utils/constants';
-import { ensureElement, cloneTemplate } from './utils/utils';
-import { AppState, CatalogChangeEvent } from './components/AppData';
 import { Page } from './components/Page';
-import { Modal } from './components/Modal';
-import { Basket } from './components/Basket';
 import { Order } from './components/Order';
 import { Card, ICard } from './components/Card';
 import { IOrder } from './types';
+import { LarekAPI } from './components/LarekAPI';
+import { Modal } from './components/Modal';
+import { Basket } from './components/Basket';
+import { API_URL, CDN_URL } from './utils/constants';
+import { AppState, CatalogChangeEvent } from './components/AppData';
 import { Success } from './components/Success';
+import { ensureElement, cloneTemplate } from './utils/utils';
 
-/* Константы */
+// Константы 
 const events = new EventEmitter();
 const api = new LarekAPI(CDN_URL, API_URL);
 
@@ -38,14 +38,13 @@ const basket = new Basket(cloneTemplate(basketTemplate), events),
 	order = new Order(cloneTemplate(orderTemplate), events),
 	contacts = new Order(cloneTemplate(contactsTemplate), events);
 
-/* API */
+// Апи
 api
 	.getProductItem()
 	.then(appData.setCatalog.bind(appData))
 	.catch((error) => console.log(error));
 
-/* Мониторинг событий */
-// Мониторинг всех событий
+// Мониторинг событий
 events.onAll(({ eventName, data }) => {
 	console.log(eventName, data);
 });
