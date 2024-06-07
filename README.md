@@ -151,7 +151,7 @@ yarn build
 }
  ```
 
- Класс, описывающий главную страницу:
+ Класс описывает главную страницу:
  ```
  class Page extends Component<IPage> {
   protected _counter: HTMLElement;
@@ -169,7 +169,7 @@ yarn build
 }
  ```
 
- Класс, описывающий карточку товара:
+ Класс описывает карточку товара:
  ```
  class Card extends Component<ICard> {
 
@@ -197,7 +197,7 @@ yarn build
 }
 
  ```
- Класс, описывающий корзину товаров:
+ Класс описывает корзину товаров:
  ```
  export class Basket extends Component<IBasket> {
 
@@ -217,7 +217,7 @@ yarn build
 }
  ```
 
- Класс, описывающий окошко заказа товара:
+ Класс описывает окошко заказа товара:
  ```
  export class Order extends Form<IOrder> {
   protected _card: HTMLButtonElement;
@@ -229,9 +229,51 @@ yarn build
 }
  ```
 
- Класс, описывающий окошко контакты:
+ Класс описывает окошко контакты:
  ```
  export class Contacts extends Form<IContacts> {
   constructor(container: HTMLFormElement, events: IEvents);
 }
  ```
+
+ ### Описание событий
+
+Изменяет список товаров на странице:
+```
+'items:changed'
+```
+
+Закрывает модальное окно:
+```
+'modal:close'
+```
+
+Сообщает об успешной оплате:
+```
+'order:success'
+```
+
+Открывает модальное окно с описание товара: 
+```
+'card:select'
+```
+
+Добавляет товар в корзину и запрещает повторно выбирать товар (Отключая кнопку добавления товара):
+```
+'card:toBasket'
+```
+
+Открывает модальное окно с товарами в корзине:
+```
+'basket:open'
+```
+
+Удаляет товар из корзины:
+```
+'basket:delete'
+```
+
+Открывает модальное окно для оплаты: 
+```
+'basket:order'
+```
