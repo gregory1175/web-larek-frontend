@@ -22,74 +22,50 @@
 Описывает список заказа:
 ```
 export interface IOrder {
-  items: string[];
-  payment: string;
-  total: number;
-  address: string;
-  email?: string;
-  phone: string;
+	items: string[];
+	payment: string;
+	total: number;
+	address: string;
+	email: string;
+	phone: string;
+  }
+```
+
+Описывает результат оплаты: 
+```
+  export interface IOrderResult {
+	id: string;
+	total: number;
 }
 ```
 
 Описывает карточку товара в магазине:
 ```
-interface IProduct {
-  id: string;
-  description: string;
-  image: string;
-  title: string;
-  price: number | null;
-  selected: boolean;
-}
-```
-
-Описывает карточку товара:
-```
-interface ICard {
-  id: string;
-  title: string;
-  category: string;
-  description: string;
-  image: string;
-  price: number | null;
-  selected: boolean;
+export interface IProduct {
+	id: string;
+	description: string;
+	image: string;
+	title: string;
+	category: string;
+	price: number;
 }
 ```
 
 Описывает состояние приложения:
 ```
- export interface IAppState {
-  basket: IProduct[];
-  store: IProduct[];
-  order: IOrder;
-  formErrors: FormErrors;
-  addToBasket(value: IProduct): void;
-  deleteFromBasket(id: string): void;
-  clearBasket(): void;
+export interface IAppState {
+	catalog: IProduct[];
+	basket: IProduct[];
+	preview: string | null;
+	order: IOrder | null;
+	loading: boolean;
 }
-```
-
-Описывает корзину товаров:
-```
-interface IBasket {
-  list: HTMLElement[];
-  price: number;
-}
-```
-
-Описывает способ оплаты: 
-```
-export interface IOrderForm {
-    payment: string;
-    address: string;
-    email: string;
-    phone: string;
-  }
 ```
 
 Описывает ошибки валидации форм:
 ```
-type FormErrors = Partial<string>;
+export type FormErrors = Partial<Record<keyof IOrder, string>>;
+
 ```
 
 ## Установка и запуск
@@ -139,3 +115,123 @@ yarn build
 - 'on' - подписка на событие 
 - 'emit' - инициализация события 
 - 'trigger' - возвращает функцию, при вызове которой инициализируется требуемое в параметрах событие 
+
+### Модели данных 
+
+ Базовая модель:
+ ```
+ abstract class Model<T> {
+
+  constructor(data: Partial<T>, protected events: IEvents) {}
+
+  emitChanges(event: string, payload?: object) {}
+}
+ ```
+
+ ### Классы представления
+
+ Базовый компонент: 
+ ``` 
+ abstract class Component<T> {
+  protected constructor(protected readonly container: HTMLElement);
+
+  toggleClass(element: HTMLElement, className: string, force?: boolean): void;
+
+  protected setText(element: HTMLElement, value: string): void;
+
+  setDisabled(element: HTMLElement, state: boolean): void;
+
+  protected setHidden(element: HTMLElement): void;
+
+  protected setVisible(element: HTMLElement): void;
+
+  protected setImage(el: HTMLImageElement, src: string, alt?: string): void;
+
+  render(data?: Partial<T>): HTMLElement;
+}
+ ```
+
+ Класс, описывающий главную страницу:
+ ```
+ class Page extends Component<IPage> {
+  protected _counter: HTMLElement;
+  protected _store: HTMLElement;
+  protected _wrapper: HTMLElement;
+  protected _basket: HTMLElement;
+
+  constructor(container: HTMLElement, protected events: IEvents);
+
+  set counter(value: number);
+
+  set store(items: HTMLElement[]);
+
+  set locked(value: boolean);
+}
+ ```
+
+ Класс, описывающий карточку товара:
+ ```
+ class Card extends Component<ICard> {
+
+  protected _title: HTMLElement;
+  protected _image: HTMLImageElement;
+  protected _category: HTMLElement;
+  protected _price: HTMLElement;
+  protected _button: HTMLButtonElement;
+
+  constructor(protected blockName: string, container: HTMLElement, actions?: ICardActions);
+
+  set id(value: string);
+  get id(): string;
+
+  set title(value: string);
+  get title(): string;
+
+  set image(value: string);
+
+  set selected(value: boolean);
+
+  set price(value: number | null);
+
+  set category(value: CategoryType);
+}
+
+ ```
+ Класс, описывающий корзину товаров:
+ ```
+ export class Basket extends Component<IBasket> {
+
+  protected _list: HTMLElement;
+  protected _price: HTMLElement;
+  protected _button: HTMLButtonElement;
+
+  constructor(protected blockName: string, container: HTMLElement, protected events: IEvents);
+
+  set price(price: number);
+
+  set list(items: HTMLElement[]);
+
+  disableButton(): void;
+
+  refreshIndices(): void;
+}
+ ```
+
+ Класс, описывающий окошко заказа товара:
+ ```
+ export class Order extends Form<IOrder> {
+  protected _card: HTMLButtonElement;
+  protected _cash: HTMLButtonElement;
+
+  constructor(protected blockName: string, container: HTMLFormElement, protected events: IEvents);
+
+  disableButtons(): void;
+}
+ ```
+
+ Класс, описывающий окошко контакты:
+ ```
+ export class Contacts extends Form<IContacts> {
+  constructor(container: HTMLFormElement, events: IEvents);
+}
+ ```

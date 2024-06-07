@@ -1,51 +1,32 @@
 export interface IOrder {
-    items: string[];
-    payment: string;
-    total: number;
-    address: string;
-    email: string;
-    phone: string;
+	items: string[];
+	payment: string;
+	total: number;
+	address: string;
+	email: string;
+	phone: string;
   }
+
+  export interface IOrderResult {
+	id: string;
+	total: number;
+}
 
 export interface IProduct {
-  id: string;
-  description: string;
-  image: string;
-  title: string;
-  price: number | null;
-  selected: boolean;
+	id: string;
+	description: string;
+	image: string;
+	title: string;
+	category: string;
+	price: number;
 }
 
-export interface ICard {
-    id: string;
-    title: string;
-    category: string;
-    description: string;
-    image: string;
-    price: number | null;
-    selected: boolean;
-  }
-
- export interface IAppState {
-  basket: IProduct[];
-  store: IProduct[];
-  order: IOrder;
-  formErrors: FormErrors;
-  addToBasket(value: IProduct): void;
-  deleteFromBasket(id: string): void;
-  clearBasket(): void;
+export interface IAppState {
+	catalog: IProduct[];
+	basket: IProduct[];
+	preview: string | null;
+	order: IOrder | null;
+	loading: boolean;
 }
 
-export interface IBasket {
-  list: HTMLElement[];
-  price: number;
-}
-
-export interface IOrderForm {
-    payment: string;
-    address: string;
-    email: string;
-    phone: string;
-  }
-
-type FormErrors = Partial<string>;
+export type FormErrors = Partial<Record<keyof IOrder, string>>;
