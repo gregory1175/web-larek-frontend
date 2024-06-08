@@ -1,5 +1,5 @@
 import { IProduct } from '../types';
-import { Component } from './Component';
+import { Component } from './base/Component';
 
 interface ICardActions {
 	onClick: (event: MouseEvent) => void;
@@ -47,8 +47,8 @@ export class Card extends Component<ICard> {
 	}
 
 	set basketId(value: string) {
-		this._basketId.textContent = value;
-	}
+		this.setText(this._basketId, value);
+	  }
 
 	get basketId(): string {
 		return this._basketId.textContent || '';

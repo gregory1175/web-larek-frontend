@@ -1,5 +1,5 @@
-import { Component } from './Component';
-import { EventEmitter } from './base/events';
+import { Component } from './base/Component';
+import { EventEmitter } from './base/Events';
 import { ensureElement, createElement, formatNumber } from '../utils/utils';
 import { ICard } from './Card';
 

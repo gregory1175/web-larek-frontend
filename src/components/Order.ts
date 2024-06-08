@@ -1,6 +1,6 @@
 import { Form } from './Form';
 import { IOrder } from '../types';
-import { IEvents } from './base/events';
+import { IEvents } from './base/Events';
 import { ensureAllElements } from '../utils/utils';
 
 export class Order extends Form<IOrder> {

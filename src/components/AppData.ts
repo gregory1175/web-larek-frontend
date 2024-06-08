@@ -1,5 +1,5 @@
 import { ICard } from './Card';
-import { Model } from './Model';
+import { Model } from './base/Model';
 import { IAppState, IOrder, FormErrors } from '../types';
 
 export type CatalogChangeEvent = {

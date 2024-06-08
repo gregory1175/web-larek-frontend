@@ -1,6 +1,6 @@
 import './scss/styles.scss';
 
-import { EventEmitter } from './components/base/events';
+import { EventEmitter } from './components/base/Events';
 import { Page } from './components/Page';
 import { Order } from './components/Order';
 import { Card, ICard } from './components/Card';
@@ -110,11 +110,13 @@ events.on('item:check', (item: ICard) => {
 // Добавление товара в корзину
 events.on('item:add', (item: ICard) => {
 	appData.addToBasket(item);
+	basket.selected = appData.basket;
 });
 
 // Удаление товара из корзины
 events.on('item:remove', (item: ICard) => {
 	appData.removeFromBasket(item);
+	basket.selected = appData.basket;
 });
 
 // Изменение счетчика товаров корзины
@@ -229,5 +231,5 @@ events.on('contacts:submit', () => {
 				content: success.render({}),
 			});
 		})
-		.catch((err) => console.error(err));
-});
+		.catch(console.error); 
+	});

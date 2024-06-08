@@ -1,5 +1,5 @@
-import { Component } from './Component';
-import { IEvents } from './base/events';
+import { Component } from './base/Component';
+import { IEvents } from './base/Events';
 import { ensureElement } from '../utils/utils';
 
 interface IFormState {
@@ -43,8 +43,8 @@ export class Form<T> extends Component<IFormState> {
 	}
 
 	set valid(value: boolean) {
-		this._submit.disabled = !value;
-	}
+		this.setDisabled(this._submit, !value);
+	  }
 
 	set errors(value: string) {
 		this.setText(this._errors, value);
