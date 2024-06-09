@@ -105,7 +105,7 @@ export class Card extends Component<ICard> {
 	}
 
 	set button(value: string) {
-		if (this._button) this._button.textContent = value;
+		this.setText(this._button, value);
 	}
 
 	set price(value: number | null) {
